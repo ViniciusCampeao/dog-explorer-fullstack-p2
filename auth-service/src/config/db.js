@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
 
 export async function connectDB() {
-  await mongoose.connect(process.env.MONGO_URI);
+  await mongoose.connect(process.env.MONGO_URI, { maxPoolSize: 10 });
 }

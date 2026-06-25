@@ -2,12 +2,17 @@ import 'dotenv/config';
 import http from 'http';
 import express from 'express';
 import cors from 'cors';
+import compression from 'compression';
+import morgan from 'morgan';
 import { WebSocketServer, WebSocket } from 'ws';
 import subscriber from './config/redis.js';
 import healthRoutes from './routes/health.js';
 
 const app = express();
+
 app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
+app.use(compression());
+app.use(morgan('combined'));
 app.use('/health', healthRoutes);
 
 const server = http.createServer(app);
