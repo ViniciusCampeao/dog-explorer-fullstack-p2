@@ -4,9 +4,9 @@ import express from 'express';
 import cors from 'cors';
 import compression from 'compression';
 import morgan from 'morgan';
-import { WebSocketServer, WebSocket } from 'ws';
-import subscriber from './config/redis.js';
+import { WebSocketServer } from 'ws';
 import healthRoutes from './routes/health.js';
+import { setupSubscriber } from './models/subscriber.js';
 
 const app = express();
 
@@ -22,17 +22,7 @@ wss.on('connection', (ws) => {
   ws.on('error', console.error);
 });
 
-subscriber.subscribe('dog-events', (err) => {
-  if (err) console.error('Redis subscribe error:', err);
-});
-
-subscriber.on('message', (_channel, message) => {
-  for (const client of wss.clients) {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(message);
-    }
-  }
-});
+setupSubscriber(wss);
 
 server.listen(process.env.PORT || 3003, () => {
   console.log(`Notification service running on port ${process.env.PORT || 3003}`);
