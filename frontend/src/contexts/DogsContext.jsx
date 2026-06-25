@@ -3,8 +3,8 @@ import { useAuth } from './AuthContext.jsx'
 
 const DogsContext = createContext()
 
-const API = 'http://localhost:3002'
-const WS_URL = 'ws://localhost:3003'
+const API = import.meta.env.VITE_API_URL || 'http://localhost:3002'
+const WS_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:3003'
 
 export function DogsProvider({ children }) {
   const { token } = useAuth()

@@ -2,6 +2,8 @@ import { createContext, useContext, useState } from 'react'
 
 const AuthContext = createContext()
 
+const AUTH_URL = import.meta.env.VITE_AUTH_URL || '${AUTH_URL}'
+
 function decodeToken(token) {
   try {
     return JSON.parse(atob(token.split('.')[1]))
@@ -16,7 +18,7 @@ export function AuthProvider({ children }) {
   const user = token ? decodeToken(token) : null
 
   async function login(username, password) {
-    const res = await fetch('http://localhost:3001/auth/login', {
+    const res = await fetch('${AUTH_URL}/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
@@ -29,7 +31,7 @@ export function AuthProvider({ children }) {
 
   async function logout() {
     if (token) {
-      await fetch('http://localhost:3001/auth/logout', {
+      await fetch('${AUTH_URL}/auth/logout', {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
       }).catch(() => {})
