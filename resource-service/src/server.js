@@ -18,6 +18,7 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
+app.set('trust proxy', 1)
 app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
 app.use(compression());
 app.use(morgan('combined'));
