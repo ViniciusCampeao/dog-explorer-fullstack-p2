@@ -4,7 +4,7 @@ ARG VITE_API_URL
 ARG VITE_WS_URL
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 COPY . .
 RUN npm run build
 
