@@ -18,7 +18,7 @@ export function AuthProvider({ children }) {
   const user = token ? decodeToken(token) : null
 
   async function login(username, password) {
-    const res = await fetch('${AUTH_URL}/auth/login', {
+    const res = await fetch(`${AUTH_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
@@ -31,7 +31,7 @@ export function AuthProvider({ children }) {
 
   async function logout() {
     if (token) {
-      await fetch('${AUTH_URL}/auth/logout', {
+      await fetch(`${AUTH_URL}/auth/logout`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
       }).catch(() => {})
