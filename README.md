@@ -55,7 +55,7 @@ REDIS_URL=redis://redis:6379
 JWT_SECRET=segredo_jwt_super_secreto
 CORS_ORIGIN=http://localhost
 
-VITE_AUTH_URL=http://localhost/auth
+VITE_AUTH_URL=http://localhost
 VITE_API_URL=http://localhost/api
 VITE_WS_URL=ws://localhost/ws
 ```

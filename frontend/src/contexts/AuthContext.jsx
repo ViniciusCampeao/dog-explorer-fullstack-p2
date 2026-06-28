@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from 'react'
 
 const AuthContext = createContext()
 
-const AUTH_URL = import.meta.env.VITE_AUTH_URL || '${AUTH_URL}'
+const AUTH_URL = import.meta.env.VITE_AUTH_URL || 'http://localhost:3001'
 
 function decodeToken(token) {
   try {
