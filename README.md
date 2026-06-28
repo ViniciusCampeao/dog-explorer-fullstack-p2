@@ -139,6 +139,7 @@ node src/server.js
 MONGO_URI=mongodb://localhost:27017/resource-db
 REDIS_URL=redis://localhost:6379
 JWT_SECRET=segredo_jwt_super_secreto
+AUTH_SERVICE_URL=http://localhost:3001
 PORT=3002
 ```
 
@@ -186,6 +187,20 @@ Browser → nginx (80)
 
 resource-service → Redis Pub/Sub (dog-events) → notification-service → WebSocket → Browser
 ```
+
+### Validação de token entre serviços
+
+A cada requisição autenticada, o **resource-service consulta o auth-service** em
+`POST /auth/verify` (que confere a assinatura do JWT e a lista de revogação no Redis).
+Se o auth-service estiver indisponível, o resource-service **degrada para validação
+local** com o segredo compartilhado e registra o incidente no log — tratamento de erro
+explícito entre serviços.
+
+### Segurança / HTTPS
+
+Senhas são armazenadas com **bcrypt (hash + salt)**. Em produção, o tráfego é servido
+sob **HTTPS** pelo Cloudflare Tunnel à frente do Nginx (terminação TLS na borda); no
+ambiente local de demonstração os serviços respondem em HTTP via `http://localhost`.
 
 ## Tecnologias
 

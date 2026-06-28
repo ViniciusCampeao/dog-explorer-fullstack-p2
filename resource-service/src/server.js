@@ -21,7 +21,7 @@ const limiter = rateLimit({
 app.set('trust proxy', 1)
 app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
 app.use(compression());
-app.use(morgan('combined'));
+app.use(morgan(':date[iso] [resource-service] :method :url :status :res[content-length]B :response-time ms'));
 app.use(express.json());
 app.use((req, _res, next) => {
   if (req.body) req.body = sanitize(req.body);

@@ -12,7 +12,7 @@ const app = express();
 
 app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
 app.use(compression());
-app.use(morgan('combined'));
+app.use(morgan(':date[iso] [notification-service] :method :url :status :res[content-length]B :response-time ms'));
 app.use('/health', healthRoutes);
 
 const server = http.createServer(app);
